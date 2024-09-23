@@ -12,7 +12,8 @@ class GoalAndStartNode(Node):
 
         self.get_logger().info('Node has started. Waiting for user input...')
 
-        # timer is blocking type; won't create a new instance until current instance returns
+        # timer is of blocking type; won't create a new instance 
+        # until current instance returns
         self.timer = self.create_timer(0.01, self.prompt_for_coordinates)
 
     def prompt_for_coordinates(self):
@@ -21,24 +22,26 @@ class GoalAndStartNode(Node):
         start_x = int(input("Enter start's row index: "))
         start_y = int(input("Enter start's col index: "))
 
-        # Create Point messages for start and goal
+        # create Point messages for start and goal
+        # goal:
         goal_point = Point()
         goal_point.x = float(goal_x)
         goal_point.y = float(goal_y)
         goal_point.z = 0.0
 
+        # start:
         start_point = Point()
         start_point.x = float(start_x)
         start_point.y = float(start_y)
         start_point.z = 0.0
 
-        # Publish the messages
+        # publish the messages
         self.goal_pub.publish(goal_point)
         self.start_pub.publish(start_point)
 
         self.get_logger().info("Published new coordinates. Waiting for user input...")
         
-
+        
 def main(args=None):
     rclpy.init(args=args)
     node = GoalAndStartNode()
